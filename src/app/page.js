@@ -44,7 +44,7 @@ export default function Home() {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      background: '#000', // optional if not using page background
+      background: '#000', 
     }}>
       <div
         style={{
@@ -65,7 +65,7 @@ export default function Home() {
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Shader Background in Bottom-Right */}
+        
         <div style={{
           position: 'absolute',
           bottom: 0,
