@@ -44,9 +44,13 @@ const fragmentShader = `
   const float Y_SCALE = 3.0;
 
   // Colors for the gradient
-  const vec3 color1 = vec3(0.031, 0.0, 0.561);
-  const vec3 color2 = vec3(0.980, 0.0, 0.125);
-  const vec3 color3 = vec3(1.0, 0.8, 0.169);
+  // const vec3 color1 = vec3(0.031, 0.0, 0.561);
+  // const vec3 color2 = vec3(0.980, 0.0, 0.125);
+  // const vec3 color3 = vec3(1.0, 0.8, 0.169);
+  const vec3 color1 = vec3(0.1);  // Dark grey
+const vec3 color2 = vec3(0.5);  // Mid grey
+const vec3 color3 = vec3(0.9);  // Light grey
+
 
   // --- Simplex Noise Functions ---
   // A standard 3D simplex noise implementation
@@ -126,11 +130,23 @@ const fragmentShader = `
 
   // --- Main Execution ---
 
-  void main() {
+  // void main() {
+  //   float t = background_noise();
+  //   vec3 final_color = calc_color(t);
+  //   gl_FragColor = vec4(final_color, 1.0);
+  // }
+    void main() {
     float t = background_noise();
     vec3 final_color = calc_color(t);
-    gl_FragColor = vec4(final_color, 1.0);
+
+    // --- Fade only in the bottom-right corner ---
+    float fadeX = smoothstep(u_resolution.x - 80.0, u_resolution.x, gl_FragCoord.x);
+    float fadeY = smoothstep(u_resolution.y - 80.0, u_resolution.y, gl_FragCoord.y);
+    float mask = fadeX * fadeY;
+
+    gl_FragColor = vec4(final_color, mask);
   }
+
 `;
 
 // This creates a THREE.ShaderMaterial with our shaders and uniforms
@@ -161,7 +177,9 @@ const ShaderPlane = () => {
 
   return (
     <mesh>
-      <planeGeometry args={[2, 2]} />
+      {/* <planeGeometry args={[2, 2]} /> */}
+      <planeGeometry args={[4, 2.5]} />
+
       <backgroundMaterial
         ref={ref}
         u_resolution={resolution}
@@ -173,9 +191,19 @@ const ShaderPlane = () => {
 
 
 // The Canvas wrapper
+// export const ShaderBackground = () => {
+//   return (
+//     <Canvas camera={{ position: [0, 0, 1] }}>
+//       <ShaderPlane />
+//     </Canvas>
+//   );
+// };
 export const ShaderBackground = () => {
   return (
-    <Canvas camera={{ position: [0, 0, 1] }}>
+    <Canvas
+      camera={{ position: [0, 0, 1] }}
+      style={{ width: '100%', height: '100%' }} // so it fits the div box
+    >
       <ShaderPlane />
     </Canvas>
   );
