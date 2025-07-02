@@ -140,8 +140,8 @@ const vec3 color3 = vec3(0.9);  // Light grey
     vec3 final_color = calc_color(t);
 
     // --- Fade only in the bottom-right corner ---
-    float fadeX = smoothstep(u_resolution.x - 80.0, u_resolution.x, gl_FragCoord.x);
-    float fadeY = smoothstep(u_resolution.y - 80.0, u_resolution.y, gl_FragCoord.y);
+    float fadeX = smoothstep(u_resolution.x - 120.0, u_resolution.x, gl_FragCoord.x);
+    float fadeY = smoothstep(u_resolution.y - 120.0, u_resolution.y, gl_FragCoord.y);
     float mask = fadeX * fadeY;
 
     gl_FragColor = vec4(final_color, mask);
