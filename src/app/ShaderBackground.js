@@ -144,10 +144,10 @@ noise += simplex_noise(vec3(x * L * 0.2 - F * 0.3, y * L * 0.4, u_time * S * 0.3
     vec3 final_color = calc_color(t);
 
     // --- Fade only in the bottom-right corner ---
-    float fadeX = smoothstep(u_resolution.x - 80.0, u_resolution.x, gl_FragCoord.x);
-    float fadeY = smoothstep(u_resolution.y - 80.0, u_resolution.y, gl_FragCoord.y);
+    float fadeX = smoothstep(u_resolution.x - 60.0, u_resolution.x, gl_FragCoord.x);
+    float fadeY = smoothstep(u_resolution.y - 60.0, u_resolution.y, gl_FragCoord.y);
     float mask = fadeX * fadeY;
-    mask = mix(1.0,mask,t);
+    mask = mix(1.0 , mask , t);
 
     gl_FragColor = vec4(final_color, mask);
   }
